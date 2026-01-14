@@ -15,8 +15,11 @@ helper tool for use within and with Neovim
     - [x] Home location (absolute/~/$HOME)
         - Relative locations below `./<location>` are rooted in Home
     - [x] Journal location (absolute/./~/$HOME)
-    - [x] Inbox location (absolute/./~/$HOME)
+    - [x] Inbox nocation (absolute/./~/$HOME)
     - [x] Template location (absolute/./~/$HOME)
+    - [x] Proper error messaging
+        - [x] No files
+        - [x] All necessary fields filled
     - [ ] Data Storage location (absolute/./~/$HOME)
 
 - [x] Open Notes home

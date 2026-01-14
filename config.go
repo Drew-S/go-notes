@@ -54,6 +54,11 @@ func LoadConfig() (Config, error) {
 		return Config{}, err
 	}
 
+	if cfg.Root == "" || cfg.Inbox == "" || cfg.Journal == "" {
+		log.Fatal("missing fields: ensure that root, inbox, and journal are set")
+		return Config{}, err
+	}
+
 	// Expand config to be absolute path
 	cfg.Root = strings.Replace(cfg.Root, "$HOME", HOME, 1)
 	cfg.Root = strings.Replace(cfg.Root, "~", HOME, 1)
