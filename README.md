@@ -6,11 +6,17 @@ helper tool for use within and with Neovim
 ## Plans
 
 - [/] Config
+    - [x] Multiple config locations (priority order below)
+        - [x] $XDG_CONFIG_HOME/go-notes/go-notes.yaml
+        - [x] $XDG_CONFIG_HOME/go-notes/config.yaml
+        - [x] ~/.config/go-notes/go-notes.yaml
+        - [x] ~/.config/go-notes/config.yaml
+        - [x] ~/.go-notes.yaml
     - [x] Home location (absolute/~/$HOME)
         - Relative locations below `./<location>` are rooted in Home
-    - [/] Journal location (absolute/./~/$HOME)
-    - [/] Inbox location (absolute/./~/$HOME)
-    - [/] Template location (absolute/./~/$HOME)
+    - [x] Journal location (absolute/./~/$HOME)
+    - [x] Inbox location (absolute/./~/$HOME)
+    - [x] Template location (absolute/./~/$HOME)
     - [ ] Data Storage location (absolute/./~/$HOME)
 
 - [x] Open Notes home
