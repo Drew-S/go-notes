@@ -46,7 +46,7 @@
     - [ ] Update links index
 
 - [ ] Searching system
-    - [ ] Defer to use fzf
+    - [ ] Defer to use fzf to create great interface
 
 - [ ] Bookmark system?
     - CLI 
