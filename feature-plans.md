@@ -1,31 +1,3 @@
-# Notes
-
-Notes is a CLI tool to help with Zettlekasten notes from the terminal. Its a
-helper tool for use within and with Neovim
-
-Current version is an early work in progress. I wanted a system up and running
-that I can quickly use. The system is very limited and for the time being I do
-not recommend people to use the tool.
-
-This tool has hardcoded filenames for new notes in the format of YYYY-MMM-DD.md
-and is hardcoded to use neovim `nvim`. I have plans to generalize this, first
-with the template expansion and later with general editor choice.
-
-## Usage
-
-`notes` -> Open up your configured notes location with neovim
-`notes new {shortcut}` -> Create a new shortcut file (journal for example)
-
-## Plans
-
-- Template system that is Hugo compatible
-- Note search system
-- Tag system (not search and linking)
-- Linking system (back and forward link listing)
-- Bookmark system
-- Neovim integration (will be separate project, this should end up being stand
-  alone)
-
 
 - [/] Config
     - [x] Multiple config locations (priority order below)
@@ -36,31 +8,24 @@ with the template expansion and later with general editor choice.
         - [x] ~/.go-notes.yaml
     - [x] Home location (absolute/~/$HOME)
         - Relative locations below `./<location>` are rooted in Home
-    - [x] Journal location (absolute/./~/$HOME)
-    - [ ] Journal formatting (Use Golang builtin date or standard)
-    - [x] Inbox location (absolute/./~/$HOME)
-    - [ ] Inbox formatting (Use Golang builtin date or standard)
+    - [x] Shortcut location (absolute/./~/$HOME)
+    - [x] Shortcut command
+    - [ ] Shortcut template (Use Golang builtin date or standard)
     - [x] Template location (absolute/./~/$HOME)
     - [x] Proper error messaging
         - [x] No files
         - [x] All necessary fields filled
     - [ ] Data Storage location (absolute/./~/$HOME)
 
-- [ ] Generalize the Inbox/Journal/Source/etc system
+- [/] Generalize the Inbox/Journal/Source/etc system
     - Have the system be set multiple special note types
     - eg.
         - `notes new <shortcut>` -> config [{ shortcut, template, location }]
-            - shortcut: "journal",
-            - template: ".tempalets/journal.md"
-            - location: "Personal/Journal/<YYYY>/<MMM>/<DD> - <DDD>.md"
+            - [x] shortcut: "journal",
+            - [ ] template: ".templates/journal.md"
+            - [/] location: "Personal/Journal/<YYYY>/<MMM>/<DD> - <DDD>.md"
 
 - [x] Open Notes home
-- [ ] Create/open todays Journal
-    - [ ] Basic Create/open
-    - [ ] Template Rendering
-- [ ] Create/open todays Inbox
-    - [ ] Basic Create/open
-    - [ ] Template Rendering
 
 - [ ] Template system
     - Go lang template system
@@ -79,6 +44,9 @@ with the template expansion and later with general editor choice.
     - [ ] Get forward links (async)
     - [ ] Get backward links (async)
     - [ ] Update links index
+
+- [ ] Searching system
+    - [ ] Defer to use fzf
 
 - [ ] Bookmark system?
     - CLI 

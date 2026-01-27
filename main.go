@@ -1,8 +1,8 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"os"
 	"path/filepath"
 	"time"
 )
@@ -12,29 +12,34 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	command := "default"
 
-	if len(os.Args) >= 2 {
-		command = os.Args[2]
+	flag.Parse()
+
+	command := flag.Arg(0)
+
+	if command == "" {
+		command = "default"
 	}
 
 	switch command {
-	case "diary":
-	case "journal":
-		_, err := CreateDirIfNotExist(config.Journal)
-		if err != nil {
-			panic(err)
-		}
-		OpenNvim(config.Root, filepath.Join(config.Journal, fmt.Sprintf("%s.md", time.Now().Format("2006-01-02"))))
-		break
-
-	case "inbox":
 	case "new":
-		_, err := CreateDirIfNotExist(config.Inbox)
-		if err != nil {
-			panic(err)
+		shortcut := flag.Arg(1)
+		if shortcut == "" {
+			fmt.Println("No command given")
+			return
 		}
-		OpenNvim(config.Root, filepath.Join(config.Inbox, fmt.Sprintf("%s.md", time.Now().Format("2006-01-02"))))
+		for _, short := range config.Shortcuts {
+			if short.Command == shortcut {
+				_, err := CreateDirIfNotExist(short.Location)
+				if err != nil {
+					panic(err)
+				}
+				OpenNvim(config.Root, filepath.Join(
+					short.Location,
+					fmt.Sprintf("%s.md", time.Now().Format("2006-01-02"))))
+				return
+			}
+		}
 		break
 
 	default:

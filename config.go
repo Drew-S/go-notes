@@ -9,12 +9,17 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+type NewNote struct {
+	Command  string `yaml:"command"`  // command to use when `notes new {command}`
+	Template string `yaml:"template"` // ./template.md -> {config.Template}/template.md
+	Location string `yaml:"location"` // ./inbox ->
+}
+
 type Config struct {
-	Root      string `yaml:"root"`
-	Templates string `yaml:"templates"`
-	Journal   string `yaml:"journal"`
-	Inbox     string `yaml:"inbox"`
-	Home      string `yaml:"home"`
+	Root      string    `yaml:"root"`
+	Templates string    `yaml:"templates"` // ./templates/ -> {config.Root}/templates/
+	Home      string    `yaml:"home"`
+	Shortcuts []NewNote `yamls:"shortcuts"`
 }
 
 func LoadConfig() (Config, error) {
@@ -54,8 +59,8 @@ func LoadConfig() (Config, error) {
 		return Config{}, err
 	}
 
-	if cfg.Root == "" || cfg.Inbox == "" || cfg.Journal == "" {
-		log.Fatal("missing fields: ensure that root, inbox, and journal are set")
+	if cfg.Root == "" {
+		log.Fatal("missing fields: ensure that root is set")
 		return Config{}, err
 	}
 
@@ -67,13 +72,11 @@ func LoadConfig() (Config, error) {
 	cfg.Templates = strings.Replace(cfg.Templates, "$HOME", HOME, 1)
 	cfg.Templates = strings.Replace(cfg.Templates, "~", HOME, 1)
 
-	cfg.Journal = strings.Replace(cfg.Journal, "./", cfg.Root+"/", 1)
-	cfg.Journal = strings.Replace(cfg.Journal, "$HOME", HOME, 1)
-	cfg.Journal = strings.Replace(cfg.Journal, "~", HOME, 1)
-
-	cfg.Inbox = strings.Replace(cfg.Inbox, "./", cfg.Root+"/", 1)
-	cfg.Inbox = strings.Replace(cfg.Inbox, "$HOME", HOME, 1)
-	cfg.Inbox = strings.Replace(cfg.Inbox, "~", HOME, 1)
+	for _, short := range cfg.Shortcuts {
+		short.Template = strings.Replace(short.Template, "./", cfg.Templates+"/", 1)
+		short.Template = strings.Replace(short.Template, "$HOME", HOME, 1)
+		short.Template = strings.Replace(short.Template, "~", HOME, 1)
+	}
 
 	return cfg, nil
 }
