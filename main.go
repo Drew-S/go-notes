@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"os"
-	"os/exec"
+	"path/filepath"
+	"time"
 )
 
 func main() {
@@ -16,31 +18,31 @@ func main() {
 		command = os.Args[2]
 	}
 
-	cwd, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-	if err = os.Chdir(config.Root); err != nil {
-		panic(err)
-	}
-
 	switch command {
+	case "diary":
 	case "journal":
-		break
-	case "new":
-		break
-	default:
-	case "default":
-		nvim := exec.Command("nvim", config.Home)
-		nvim.Stdin = os.Stdin
-		nvim.Stdout = os.Stdout
-		nvim.Stderr = os.Stderr
-		if err = nvim.Run(); err != nil {
+		_, err := CreateDirIfNotExist(config.Journal)
+		if err != nil {
 			panic(err)
 		}
-	}
+		OpenNvim(config.Root, filepath.Join(config.Journal, fmt.Sprintf("%s.md", time.Now().Format("2006-01-02"))))
+		break
 
-	if err := os.Chdir(cwd); err != nil {
-		panic(err)
+	case "inbox":
+	case "new":
+		_, err := CreateDirIfNotExist(config.Inbox)
+		if err != nil {
+			panic(err)
+		}
+		OpenNvim(config.Root, filepath.Join(config.Inbox, fmt.Sprintf("%s.md", time.Now().Format("2006-01-02"))))
+		break
+
+	default:
+	case "default":
+		_, err := CreateDirIfNotExist(config.Home)
+		if err != nil {
+			panic(err)
+		}
+		OpenNvim(config.Root, config.Home)
 	}
 }
