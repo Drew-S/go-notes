@@ -17,10 +17,6 @@ func main() {
 
 	command := flag.Arg(0)
 
-	if command == "" {
-		command = "default"
-	}
-
 	switch command {
 	case "new":
 		shortcut := flag.Arg(1)
@@ -40,10 +36,8 @@ func main() {
 				return
 			}
 		}
-		break
 
 	default:
-	case "default":
 		_, err := CreateDirIfNotExist(config.Home)
 		if err != nil {
 			panic(err)
