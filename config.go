@@ -72,10 +72,14 @@ func LoadConfig() (Config, error) {
 	cfg.Templates = strings.Replace(cfg.Templates, "$HOME", HOME, 1)
 	cfg.Templates = strings.Replace(cfg.Templates, "~", HOME, 1)
 
-	for _, short := range cfg.Shortcuts {
-		short.Template = strings.Replace(short.Template, "./", cfg.Templates+"/", 1)
-		short.Template = strings.Replace(short.Template, "$HOME", HOME, 1)
-		short.Template = strings.Replace(short.Template, "~", HOME, 1)
+	for i := range cfg.Shortcuts {
+		cfg.Shortcuts[i].Template = strings.Replace(cfg.Shortcuts[i].Template, "./", cfg.Templates+"/", 1)
+		cfg.Shortcuts[i].Template = strings.Replace(cfg.Shortcuts[i].Template, "$HOME", HOME, 1)
+		cfg.Shortcuts[i].Template = strings.Replace(cfg.Shortcuts[i].Template, "~", HOME, 1)
+
+		cfg.Shortcuts[i].Location = strings.Replace(cfg.Shortcuts[i].Location, "./", cfg.Root+"/", 1)
+		cfg.Shortcuts[i].Location = strings.Replace(cfg.Shortcuts[i].Location, "$HOME", HOME, 1)
+		cfg.Shortcuts[i].Location = strings.Replace(cfg.Shortcuts[i].Location, "~", HOME, 1)
 	}
 
 	return cfg, nil

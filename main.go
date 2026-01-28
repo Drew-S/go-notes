@@ -3,8 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"path/filepath"
-	"time"
 )
 
 func main() {
@@ -26,13 +24,12 @@ func main() {
 		}
 		for _, short := range config.Shortcuts {
 			if short.Command == shortcut {
+				short.Location = expandFileName(short.Location)
 				_, err := CreateDirIfNotExist(short.Location)
 				if err != nil {
 					panic(err)
 				}
-				OpenNvim(config.Root, filepath.Join(
-					short.Location,
-					fmt.Sprintf("%s.md", time.Now().Format("2006-01-02"))))
+				OpenNvim(config.Root, short.Location)
 				return
 			}
 		}

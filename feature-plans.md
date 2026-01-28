@@ -10,8 +10,8 @@
         - Relative locations below `./<location>` are rooted in Home
     - [x] Shortcut location (absolute/./~/$HOME)
     - [x] Shortcut command
-    - [ ] Shortcut template (Use Golang builtin date or standard)
-    - [x] Template location (absolute/./~/$HOME)
+    - [ ] Shortcut template
+    - [x] Template location (absolute/./~/$HOME) (date expansion)
     - [x] Proper error messaging
         - [x] No files
         - [x] All necessary fields filled
@@ -23,7 +23,7 @@
         - `notes new <shortcut>` -> config [{ shortcut, template, location }]
             - [x] shortcut: "journal",
             - [ ] template: ".templates/journal.md"
-            - [/] location: "Personal/Journal/<YYYY>/<MMM>/<DD> - <DDD>.md"
+            - [x] location: "Personal/Journal/{2006}/{Jan}/{02} - {Mon}.md"
 
 - [x] Open Notes home
 
