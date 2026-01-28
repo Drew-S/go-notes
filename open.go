@@ -29,6 +29,7 @@ func CreateDirIfNotExist(file string) (bool, error) {
 
 // file is absolute path
 // root is notes directory, also absolute
+// TODO: Change to open generic editor, use $EDITOR
 func OpenNvim(root, file string) error {
 	cwd, err := os.Getwd()
 	if err != nil {
