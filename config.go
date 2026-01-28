@@ -9,17 +9,19 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type NewNote struct {
+// TODO: Add data storage location option [optional]
+
+type Shortcut struct {
 	Command  string `yaml:"command"`  // command to use when `notes new {command}`
 	Template string `yaml:"template"` // ./template.md -> {config.Template}/template.md
 	Location string `yaml:"location"` // ./inbox ->
 }
 
 type Config struct {
-	Root      string    `yaml:"root"`
-	Templates string    `yaml:"templates"` // ./templates/ -> {config.Root}/templates/
-	Home      string    `yaml:"home"`
-	Shortcuts []NewNote `yamls:"shortcuts"`
+	Root      string     `yaml:"root"`
+	Templates string     `yaml:"templates"` // ./templates/ -> {config.Root}/templates/
+	Home      string     `yaml:"home"`
+	Shortcuts []Shortcut `yamls:"shortcuts"`
 }
 
 func LoadConfig() (Config, error) {
@@ -32,6 +34,8 @@ func LoadConfig() (Config, error) {
 		fmt.Sprintf("%s/go-notes/config.yaml", X),
 		fmt.Sprintf("%s/.config/go-notes/go-notes.yaml", HOME),
 		fmt.Sprintf("%s/.config/go-notes/config.yaml", HOME),
+		fmt.Sprintf("%s/.go-notes/go-notes.yaml", HOME),
+		fmt.Sprintf("%s/.go-notes/config.yaml", HOME),
 		"./.go-notes.yaml",
 	}
 
