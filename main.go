@@ -24,6 +24,9 @@ TODO:
 			  oldest note, first/last via tag, etc.)
 	- search system using fzf (filename, infile, in frontmatter, in content,
       via tag, via bookmark, etc.)
+    - merge system: merge 2 notes; frontmatter smart merged, body content concatenated
+    - split system: split 2 notes; frontmatter duplicated, split by designated line number
+
 */
 
 func main() {
