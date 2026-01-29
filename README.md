@@ -1,4 +1,4 @@
-# Notes
+# Go-Notes
 
 Notes is a CLI tool to help with Zettlekasten notes from the terminal. Its a
 helper tool for use within and with Neovim
