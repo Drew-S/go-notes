@@ -22,6 +22,17 @@ TODO:
 		- quick open bookmark
 			- parameterize quick open? (current date journal, newest note,
 			  oldest note, first/last via tag, etc.)
+    - richer template system
+        - more variables to work with
+		- input variables (so when called, it asks for user input)
+			- user label, type, and where it goes
+			- whether this is the filename expansion template
+			- or the template itself
+				- example {{input:int:age}} {{input:str:source}} {{input:sel[book,video,site]:url}}
+					- {{input:str:source}} {{input::source}} --> {{.Input.Source}} (filename expansion)
+					- then all {{.Input.Source}} gets the template data gets this
+				- how to reuse (for example source is used twice, we don't
+				  want the user to input twice)
 	- search system using fzf (filename, infile, in frontmatter, in content,
       via tag, via bookmark, etc.)
 */
