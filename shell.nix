@@ -4,5 +4,7 @@ pkgs.mkShell {
   nativeBuildInputs = with pkgs.buildPackages; [
     go
     gnumake
+    golangci-lint
+    golangci-lint-langserver
   ];
 }

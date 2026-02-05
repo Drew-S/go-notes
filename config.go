@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"gopkg.in/yaml.v3"
@@ -22,6 +23,18 @@ type Config struct {
 	Templates string     `yaml:"templates"` // ./templates/ -> {config.Root}/templates/
 	Home      string     `yaml:"home"`
 	Shortcuts []Shortcut `yamls:"shortcuts"`
+}
+
+func pathTransform(input, dot_slash, home string) string {
+	if strings.HasPrefix(input, "$HOME") || strings.HasPrefix(input, "~") {
+		input = filepath.Join(home, strings.TrimPrefix(strings.TrimPrefix(input, "$HOME"), "~"))
+	}
+
+	if strings.HasPrefix(input, "./") {
+		input = filepath.Join(dot_slash, strings.TrimPrefix(input, "./"))
+	}
+
+	return input
 }
 
 func LoadConfig() (Config, error) {
@@ -69,21 +82,13 @@ func LoadConfig() (Config, error) {
 	}
 
 	// Expand config to be absolute path
-	cfg.Root = strings.Replace(cfg.Root, "$HOME", HOME, 1)
-	cfg.Root = strings.Replace(cfg.Root, "~", HOME, 1)
+	cfg.Root = pathTransform(cfg.Root, "", HOME)
 
-	cfg.Templates = strings.Replace(cfg.Templates, "./", cfg.Root+"/", 1)
-	cfg.Templates = strings.Replace(cfg.Templates, "$HOME", HOME, 1)
-	cfg.Templates = strings.Replace(cfg.Templates, "~", HOME, 1)
+	cfg.Templates = pathTransform(cfg.Templates, cfg.Root, HOME)
 
 	for i := range cfg.Shortcuts {
-		cfg.Shortcuts[i].Template = strings.Replace(cfg.Shortcuts[i].Template, "./", cfg.Templates+"/", 1)
-		cfg.Shortcuts[i].Template = strings.Replace(cfg.Shortcuts[i].Template, "$HOME", HOME, 1)
-		cfg.Shortcuts[i].Template = strings.Replace(cfg.Shortcuts[i].Template, "~", HOME, 1)
-
-		cfg.Shortcuts[i].Location = strings.Replace(cfg.Shortcuts[i].Location, "./", cfg.Root+"/", 1)
-		cfg.Shortcuts[i].Location = strings.Replace(cfg.Shortcuts[i].Location, "$HOME", HOME, 1)
-		cfg.Shortcuts[i].Location = strings.Replace(cfg.Shortcuts[i].Location, "~", HOME, 1)
+		cfg.Shortcuts[i].Template = pathTransform(cfg.Shortcuts[i].Template, cfg.Templates, HOME)
+		cfg.Shortcuts[i].Location = pathTransform(cfg.Shortcuts[i].Location, cfg.Root, HOME)
 	}
 
 	return cfg, nil
